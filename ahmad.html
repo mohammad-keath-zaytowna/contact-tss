@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contact Card</title>
+
+    <!-- Optional: Arabic-friendly font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      @font-face {
+        font-family: "URBANE";
+        src:
+          url("fonts/Urbane-Light.woff2") format("woff2"),
+          url("fonts/Urbane-Light.woff") format("woff");
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      :root {
+        --navy: #1f3340;
+        --navy-2: #1b2c37;
+        --line: rgba(255, 255, 255, 0.12);
+        --text: #ffffff;
+        --muted: rgba(255, 255, 255, 0.7);
+        --card: #ffffff;
+        --cardText: #1b1f24;
+        --sub: #8a96a3;
+        --divider: #efefef;
+        --accent: #18c6bf; /* teal */
+        --ig: #e1306c;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family:
+          "URBANE",
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          Arial,
+          sans-serif;
+        background: #efefef;
+
+        color: var(--cardText);
+        display: grid;
+        place-items: center;
+        min-height: 100vh;
+
+        perspective: 1200px;
+        overflow-x: hidden;
+      }
+
+      .phone {
+        width: min(420px, 100%);
+
+        background: #fff;
+        overflow: hidden;
+
+        transform-style: preserve-3d;
+
+        backdrop-filter: blur(0px);
+        border-radius: 10px;
+        transform-style: preserve-3d;
+
+        box-shadow:
+          0 28px 70px rgba(0, 0, 0, 0.35),
+          0 10px 24px rgba(0, 0, 0, 0.22);
+
+        /* border: 1px solid rgba(255, 255, 255, 0.22); */
+        backdrop-filter: blur(0px);
+
+        @media screen and (max-width: 600px) {
+          height: 100vh;
+          width: 100vw;
+        }
+      }
+
+      /* TOP HEADER */
+      .top {
+        background-image: url("/assets/logo.jpeg");
+        background-size: cover;
+        background-position: center;
+        color: var(--text);
+        padding: 34px 18px 0;
+        text-align: center;
+        min-height: 200px;
+      }
+
+      .contactInfo {
+        background: radial-gradient(
+          circle at 30% 30%,
+          #2ee7df,
+          #1aa39d 55%,
+          #0f5a67
+        );
+        display: grid;
+        /* place-items: center; */
+        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
+      }
+
+      .logoText {
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        font-size: 28px;
+        color: #e9feff;
+        text-transform: lowercase;
+      }
+      .name {
+        margin: 100px 0 2px;
+        font-size: 22px;
+        font-weight: 700;
+        text-shadow: #1b1f24 0 1px 3px;
+      }
+      .shadowed {
+        text-shadow: #1b1f24 0 1px 3px;
+      }
+      .role {
+        margin: 0 0 18px;
+        font-size: 14px;
+        opacity: 0.85;
+        font-weight: 600;
+        text-shadow: #1b1f24 0 1px 4px;
+      }
+
+      /* ACTION BAR */
+      .actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        border-top: 1px solid var(--line);
+        margin-top: 8px;
+      }
+      .actionBtn {
+        appearance: none;
+        border: 0;
+        background: transparent;
+        color: var(--text);
+        padding: 14px 10px 12px;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-decoration: none;
+        user-select: none;
+      }
+      .actionBtn + .actionBtn {
+        border-right: 1px solid var(--line); /* because RTL */
+      }
+      .actionBtn span {
+        font-size: 12px;
+        opacity: 0.95;
+      }
+      .icon {
+        width: 22px;
+        height: 22px;
+        fill: #ffffff;
+        opacity: 0.95;
+      }
+
+      /* CARD LIST */
+      .card {
+        background: var(--card);
+        margin: 0;
+        padding: 14px 0;
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03);
+      }
+
+      .row {
+        display: flex;
+        flex-direction: row-reverse; /* icon on left visually like screenshot, while RTL text */
+        gap: 14px;
+        padding: 14px 18px;
+        align-items: flex-start;
+      }
+
+      .row + .row {
+        border-top: 1px solid var(--divider);
+      }
+
+      .row .leftIcon {
+        width: 22px;
+        height: 22px;
+        margin-top: 2px;
+        opacity: 0.55;
+        fill: #6f7b86;
+        flex: 0 0 auto;
+      }
+
+      .row .text {
+        flex: 1 1 auto;
+        text-align: left; /* match the screenshot’s LTR info content */
+        direction: ltr;
+      }
+
+      .primary {
+        font-size: 15px;
+        font-weight: 700;
+        color: #1d2430;
+        margin: 0;
+        line-height: 1.25;
+      }
+      .secondary {
+        font-size: 13px;
+        color: var(--sub);
+        margin: 4px 0 0;
+        line-height: 1.2;
+      }
+
+      .sectionTitle {
+        padding: 14px 18px 6px;
+        font-weight: 700;
+        color: #7b8794;
+        font-size: 14px;
+        border-top: 1px solid var(--divider);
+        background: var(--card);
+      }
+
+      .social {
+        background: var(--card);
+        padding: 14px 18px 6px;
+      }
+
+      .igBtn {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        background: var(--ig);
+        display: grid;
+        place-items: center;
+        box-shadow: 0 10px 18px rgba(225, 48, 108, 0.25);
+        text-decoration: none;
+      }
+      .igIcon {
+        width: 40px;
+        height: 40px;
+        fill: #fff;
+      }
+
+      /* tiny safe area spacing */
+      .spacer {
+        height: 22px;
+      }
+      .link {
+        text-decoration: none;
+        color: inherit;
+      }
+      .divider {
+        height: 1px;
+        background: var(--divider);
+        border: 0;
+        margin: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main class="phone">
+      <header class="top">
+        <div class="name">أحمد جمال الدين</div>
+        <div class="role">Partner</div>
+        <nav class="actions" aria-label="actions">
+          <a class="actionBtn" href="tel:+963943238010">
+            <!-- phone icon -->
+            <svg class="icon shadowed" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.85 21 3 13.15 3 3a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.57 3.59a1 1 0 0 1-.25 1.01l-2.2 2.19z"
+              />
+            </svg>
+            <span class="shadowed">CALL</span>
+          </a>
+
+          <a class="actionBtn" href="mailto:contact@tss-syr.com">
+            <!-- paper plane icon -->
+            <svg class="icon shadowed" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M2.01 21 23 12 2.01 3 2 10l15 2-15 2z" />
+            </svg>
+            <span class="shadowed">EMAIL</span>
+          </a>
+        </nav>
+      </header>
+
+      <section class="card" aria-label="contact details">
+        <a
+          class="link"
+          target="_blank"
+          href="tel:+963943238010"
+          aria-label="Phone"
+        >
+          <div class="row">
+            <!-- phone small -->
+            <svg class="leftIcon" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.85 21 3 13.15 3 3a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.57 3.59a1 1 0 0 1-.25 1.01l-2.2 2.19z"
+              />
+            </svg>
+            <div class="text">
+              <p class="primary">+963 9 43 238 010</p>
+              <p class="secondary">Mobile</p>
+            </div>
+          </div>
+        </a>
+        <div class="divider"></div>
+
+        <a
+          class="link"
+          target="_blank"
+          href="mailto:contact@tss-syr.com"
+          aria-label="Email"
+        >
+          <div class="row">
+            <!-- mail small -->
+            <svg class="leftIcon" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5L4 8V6l8 5 8-5v2z"
+              />
+            </svg>
+            <div class="text">
+              <p class="primary">contact@tss-syr.com</p>
+              <p class="secondary">Email</p>
+            </div>
+          </div>
+        </a>
+        <div class="divider"></div>
+
+        <div class="row">
+          <!-- briefcase small -->
+          <svg class="leftIcon" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M10 4h4a2 2 0 0 1 2 2v2h4a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h4V6a2 2 0 0 1 2-2zm0 4h4V6h-4v2z"
+            />
+          </svg>
+          <div class="text">
+            <p class="primary">tss company</p>
+            <p class="secondary">Partner</p>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+        <a
+          class="link"
+          target="_blank"
+          href="https://tss-syr.com/"
+          aria-label="Website"
+        >
+          <div class="row">
+            <!-- globe small -->
+            <svg class="leftIcon" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm7.93 9h-3.17a15.6 15.6 0 0 0-1.28-5.02A8.02 8.02 0 0 1 19.93 11zM12 4c.88 0 2.14 1.7 2.85 5H9.15C9.86 5.7 11.12 4 12 4zM4.07 13h3.17c.26 1.86.8 3.6 1.28 5.02A8.02 8.02 0 0 1 4.07 13zm3.17-2H4.07a8.02 8.02 0 0 1 4.45-5.02A15.6 15.6 0 0 0 7.24 11zM12 20c-.88 0-2.14-1.7-2.85-5h5.7c-.71 3.3-1.97 5-2.85 5zm3.76-7H8.24c-.14-.65-.24-1.31-.24-2s.1-1.35.24-2h7.52c.14.65.24 1.31.24 2s-.1 1.35-.24 2zm.72 5.02c.48-1.42 1.02-3.16 1.28-5.02h3.17a8.02 8.02 0 0 1-4.45 5.02z"
+              />
+            </svg>
+            <div class="text">
+              <p class="primary">tss-syr.com</p>
+              <p class="secondary">Website</p>
+            </div>
+          </div>
+        </a>
+
+        <div class="divider"></div>
+        <!-- <div class="sectionTitle">Social Media</div> -->
+        <div class="social">
+          <a
+            class="link"
+            target="_blank"
+            href="https://www.instagram.com/mcdodo.sy/"
+            aria-label="Instagram"
+          >
+            <img src="/assets/social.png" alt="Instagram" class="igIcon" />
+          </a>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
